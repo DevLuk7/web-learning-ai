@@ -5,6 +5,9 @@ import { Document } from 'mongoose';
 export class WebPage extends Document {
   @Prop()
   url: string;
+
+  @Prop()
+  description: string;
 }
 
 export const WebPageSchema = SchemaFactory.createForClass(WebPage);

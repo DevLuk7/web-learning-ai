@@ -4,11 +4,13 @@ import { WebPage } from './entities/web-page.entity';
 import { Model } from 'mongoose';
 import { CreateWebPageDto } from './dto/create-web-page.dto/create-web-page.dto';
 import { UpdateWebPageDto } from './dto/update-web-page.dto/update-web-page.dto';
+import { AnthropicAiService } from 'src/common/anthropic-ai.service';
 
 @Injectable()
 export class WebPageService {
   constructor(
     @InjectModel(WebPage.name) private readonly webPageModel: Model<WebPage>,
+    private readonly anthropicAiService: AnthropicAiService,
   ) {}
 
   findAll() {
@@ -23,8 +25,14 @@ export class WebPageService {
     return webPage;
   }
 
-  create(createWebPageDto: CreateWebPageDto) {
-    const webPage = new this.webPageModel(createWebPageDto);
+  async create(createWebPageDto: CreateWebPageDto) {
+    const message = await this.anthropicAiService.getMessage(
+      `Make short description for webpage: ${createWebPageDto.url}`,
+    );
+    const webPage = new this.webPageModel({
+      ...createWebPageDto,
+      description: (message.content[0] as any).text,
+    });
     return webPage.save();
   }
 
