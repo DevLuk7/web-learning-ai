@@ -12,7 +12,10 @@ import { CreateWebPageDto } from './dto/create-web-page.dto/create-web-page.dto'
 import { UpdateWebPageDto } from './dto/update-web-page.dto/update-web-page.dto';
 import { Roles } from 'src/iam/authorization/decorators/roles.decorator';
 import { Role } from 'src/users/enums/role.enum';
+import { Policies } from 'src/iam/authorization/decorators/policies.decorator';
+import { FrameworkContributorPolicy } from 'src/iam/authorization/policies/framework-contributor.policy';
 
+@Policies(new FrameworkContributorPolicy())
 @Controller('web-page')
 export class WebPageController {
   constructor(private readonly webPageService: WebPageService) {}

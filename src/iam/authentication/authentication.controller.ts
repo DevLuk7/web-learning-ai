@@ -11,7 +11,6 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
 export class AuthenticationController {
   constructor(private readonly authService: AuthenticationService) {}
 
-  @Auth(AuthType.Bearer)
   @Post('sign-up')
   signUp(@Body() signUpDto: SignUpDto) {
     return this.authService.signUp(signUpDto);

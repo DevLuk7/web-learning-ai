@@ -3,8 +3,8 @@ import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 import { ActiveUserData } from 'src/iam/interfaces/active-user-data.interface';
-import { PERMISSIONS_KEY } from '../../decorators/permissions.decorator';
-import { PermissionType } from '../../permission.type';
+import { PERMISSIONS_KEY } from '../decorators/permissions.decorator';
+import { PermissionType } from '../permission.type';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
