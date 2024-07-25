@@ -17,10 +17,19 @@ import { PermissionsGuard } from './authorization/guards/permissions.guard';
 import { PoliciesGuard } from './authorization/guards/policies.guard';
 import { PolicyHandlerStorage } from './authorization/policies/policy-handlers.storage';
 import { FrameworkContributorPolicyHandler } from './authorization/policies/framework-contributor.policy';
+import { ApiKeysService } from './authentication/api-keys.service';
+import { ApiKeyGuard } from './authentication/guards/api-key/api-key.guard';
+import {
+  ApiKey,
+  ApiKeySchema,
+} from 'src/users/api-keys/entities/api-key.entity/api-key.entity';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: ApiKey.name, schema: ApiKeySchema },
+    ]),
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
   ],
@@ -46,10 +55,12 @@ import { FrameworkContributorPolicyHandler } from './authorization/policies/fram
       useClass: PoliciesGuard,
     },
     AccessTokenGuard,
+    ApiKeyGuard,
     AuthenticationService,
     RefreshTokenIdsStorage,
     PolicyHandlerStorage,
     FrameworkContributorPolicyHandler,
+    ApiKeysService,
   ],
   controllers: [AuthenticationController],
 })

@@ -14,8 +14,11 @@ import { Roles } from 'src/iam/authorization/decorators/roles.decorator';
 import { Role } from 'src/users/enums/role.enum';
 import { Policies } from 'src/iam/authorization/decorators/policies.decorator';
 import { FrameworkContributorPolicy } from 'src/iam/authorization/policies/framework-contributor.policy';
+import { Auth } from 'src/iam/authentication/decorators/auth.decorator';
+import { AuthType } from 'src/iam/authentication/enums/auth-type.enum';
 
 @Policies(new FrameworkContributorPolicy())
+@Auth(AuthType.Bearer, AuthType.ApiKey)
 @Controller('web-page')
 export class WebPageController {
   constructor(private readonly webPageService: WebPageService) {}
