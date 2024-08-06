@@ -14,6 +14,9 @@ export class User extends Document {
   @Prop()
   password: string;
 
+  @Prop()
+  googleId: string;
+
   @Prop({ enum: Role, default: Role.Regular })
   role: Role;
 
