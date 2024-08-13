@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body } from '@nestjs/common';
 import { CoursesService } from '../../application/courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { CreateCourseCommand } from 'src/courses/application/commands/create-course.command';
+import { Auth } from 'src/iam/authentication/decorators/auth.decorator';
+import { AuthType } from 'src/iam/authentication/enums/auth-type.enum';
 
+@Auth(AuthType.None)
 @Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
