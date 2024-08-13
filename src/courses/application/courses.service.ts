@@ -1,22 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCourseCommand } from './commands/create-course.command';
-import { CourseRepository } from './ports/courses.repository';
-import { CourseFactory } from '../domain/factories/course.factory';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { GetCourseQuery } from './queries/get-course.query';
 
 @Injectable()
 export class CoursesService {
   constructor(
-    private readonly courseRepository: CourseRepository,
-    private readonly courseFactory: CourseFactory,
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
   ) {}
 
   create(createCourseCommand: CreateCourseCommand) {
-    const course = this.courseFactory.create(createCourseCommand.name);
-    return this.courseRepository.save(course);
+    return this.commandBus.execute(createCourseCommand);
   }
 
   findAll() {
-    return this.courseRepository.findAll();
+    return this.queryBus.execute(new GetCourseQuery());
   }
 
   // findOne(id: number) {

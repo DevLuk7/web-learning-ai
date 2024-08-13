@@ -9,9 +9,16 @@ import { CoursesModule } from './courses/application/courses.module';
 import { CoreModule } from './core/core.module';
 import { ApplicationBootstrapOptions } from './common/interfaces/application-bootstrap-options.interface';
 import { CoursesInfrastructureModule } from './courses/infrastructure/courses-infrastructure.module';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
-  imports: [ConfigModule.forRoot(), WebPageModule, IamModule, UsersModule],
+  imports: [
+    ConfigModule.forRoot(),
+    CqrsModule.forRoot(),
+    WebPageModule,
+    IamModule,
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
