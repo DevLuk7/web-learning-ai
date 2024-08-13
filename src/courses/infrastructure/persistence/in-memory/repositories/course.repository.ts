@@ -13,8 +13,8 @@ export class InMemoryCourseRepository implements CourseRepository {
     return entities.map((item) => CourseMapper.toDomain(item));
   }
 
-  async save(alarm: Course): Promise<Course> {
-    const persistenceModel = CourseMapper.toPersistence(alarm);
+  async save(course: Course): Promise<Course> {
+    const persistenceModel = CourseMapper.toPersistence(course);
     this.courses.set(persistenceModel.id, persistenceModel);
 
     const newEntity = this.courses.get(persistenceModel.id);
