@@ -1,6 +1,5 @@
 import { Course } from '../../domain/course';
 
-export abstract class CourseRepository {
-  abstract findAll(): Promise<Course[]>;
+export abstract class CreateCourseRepository {
   abstract save(course: Course): Promise<Course>;
 }

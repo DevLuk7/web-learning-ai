@@ -1,15 +1,15 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetCourseQuery } from './get-course.query';
 import { Course } from 'src/courses/domain/course';
-import { CourseRepository } from '../ports/courses.repository';
+import { FindCourseRepository } from '../ports/find-course.repository';
 
 @QueryHandler(GetCourseQuery)
 export class GetCoursesQueryHandler
   implements IQueryHandler<GetCourseQuery, Course[]>
 {
-  constructor(private readonly courseRepository: CourseRepository) {}
+  constructor(private readonly findCourseRepository: FindCourseRepository) {}
 
   async execute(): Promise<Course[]> {
-    return this.courseRepository.findAll();
+    return this.findCourseRepository.findAll();
   }
 }

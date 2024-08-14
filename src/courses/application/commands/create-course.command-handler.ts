@@ -1,7 +1,7 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { CreateCourseCommand } from './create-course.command';
 import { Logger } from '@nestjs/common';
-import { CourseRepository } from '../ports/courses.repository';
+import { CreateCourseRepository } from '../ports/create-course.repository';
 import { CourseFactory } from 'src/courses/domain/factories/course.factory';
 import { CourseCreatedEvent } from 'src/courses/domain/events/course-created.event';
 
@@ -12,7 +12,7 @@ export class CreateCourseCommandHandler
   private readonly logger = new Logger(CreateCourseCommandHandler.name);
 
   constructor(
-    private readonly courseRepository: CourseRepository,
+    private readonly createCourseRepository: CreateCourseRepository,
     private readonly courseFactory: CourseFactory,
     private readonly eventBus: EventBus,
   ) {}
@@ -22,7 +22,7 @@ export class CreateCourseCommandHandler
       `Processing "CreateCourseCommand": ${JSON.stringify(command)}`,
     );
     const course = this.courseFactory.create(command.name);
-    await this.courseRepository.save(course);
+    await this.createCourseRepository.save(course);
 
     this.eventBus.publish(new CourseCreatedEvent(course));
 
